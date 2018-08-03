@@ -92,7 +92,9 @@ class BurgerBuilder extends Component {
             .reduce( ( sum, el ) => {
                 return sum + el;
             }, 0 );
-        return sum > 0;
+            let rtnVal = ! sum > 0;
+            console.log('updatePurchaseState ', rtnVal);
+        return rtnVal;
     }
 
     handleOrder =() =>{
@@ -117,6 +119,8 @@ class BurgerBuilder extends Component {
     //        pathname:'/checkout',
     //        search: '?' + queryString
     //    });
+
+    this.props.onInitPurchase();
     this.props.history.push('/checkout');
 
     }
@@ -172,9 +176,9 @@ class BurgerBuilder extends Component {
 
 const mapsStateToProps = state => {
     return {
-        ings: state.ingredients,
-        price: state.totalPrice,
-        error: state.error
+        ings: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice,
+        error: state.burgerBuilder.error
     };
 }
 
@@ -182,7 +186,8 @@ const mapDispatchToProps = dispatch => {
     return {
         onIngredientAdded: (ingName) => dispatch(burgerBuilderActions.addIngredients(ingName)),
         onIngredientRemoved: (ingName) => dispatch(burgerBuilderActions.removeIngredients(ingName)),
-        onInitIngredients: () => dispatch(burgerBuilderActions.initIngredients())
+        onInitIngredients: () => dispatch(burgerBuilderActions.initIngredients()),
+        onInitPurchase:() => dispatch(burgerBuilderActions.purchaseInit())
     }
 }
 

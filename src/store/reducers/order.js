@@ -2,13 +2,18 @@ import * as actionType from '../actions/actionTypes';
 
 const initState = {
     orders:[],
-    loading: false
+    loading: false,
+    purchased: false
 }
 
 const order =(state = initState, action ) => {
 
     switch(action.type){
-
+        case actionType.PURCHASE_INIT:
+        return {
+            ...state,
+            purchased: false
+        };
         case actionType.PURCHASE_BURGER_START:
         return {
             ...state,
@@ -18,7 +23,8 @@ const order =(state = initState, action ) => {
         
         const newOrder={
             ...action.orderData,
-            id: action.orderId            
+            id: action.orderId,
+            purchased: true            
         }
         return {
             ...state,
